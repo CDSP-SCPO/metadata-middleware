@@ -1,0 +1,22 @@
+stages:
+  - build
+  - deploy
+
+variables:
+    IMAGE_NAME_TAG: metadata-middleware:latest
+
+build-job:
+  stage: build
+  only:
+      - production
+  script:
+    - docker build -t $IMAGE_NAME_TAG .
+    - docker push $IMAGE_NAME_TAG
+
+deploy-job:
+  stage: deploy
+  only:
+      - production
+  script:
+    - echo "Deploying application..."
+    - echo "Application successfully deployed."
