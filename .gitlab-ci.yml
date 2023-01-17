@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-    IMAGE_NAME_TAG: metadata-middleware:latest
+    IMAGE_NAME_TAG: $CI_REGISTRY_IMAGE/metadata-middleware:latest
 
 build-job:
   stage: build
