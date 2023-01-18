@@ -3,12 +3,13 @@ stages:
   - deploy
 
 variables:
-    IMAGE_NAME_TAG: $CI_REGISTRY_IMAGE/metadata-middleware:latest
+    IMAGE_NAME_TAG: $CI_REGISTRY_IMAGE/metadata-middleware:$CI_COMMIT_REF_SLUG
 
 build-job:
   stage: build
   only:
       - production
+      - pprd
   script:
     - docker build -t $IMAGE_NAME_TAG .
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
