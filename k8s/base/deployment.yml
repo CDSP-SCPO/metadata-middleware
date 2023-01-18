@@ -2,17 +2,16 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: metadata-middleware
-  namespace: dataverse
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: metadata-middleware
+      component: metadata-middleware
 
   template:
     metadata:
       labels:
-        app: metadata-middleware
+        component: metadata-middleware
         
     spec:
       imagePullSecrets:
