@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metadata-middleware
+  namespace: dataverse
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metadata-middleware
+
+  template:
+    metadata:
+      labels:
+        app: metadata-middleware
+        
+    spec:
+      imagePullSecrets:
+        - name: gitlab-cdsp-it
+      containers:
+      - name: metadata-middleware
+        image: gitlab.sciences-po.fr:4567/cdspit/dataverse/metadata-middleware/metadata-middleware:latest
+        ports:
+          - containerPort: 8000
