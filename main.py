@@ -60,11 +60,11 @@ async def handle_oai_response(request: Request, oai_endpoint: str) -> Response:
     )
 
 
-@app.get("/dev/oai")
+@app.get("/dev/rdg/oai")
 async def oai_dev(request: Request) -> Response:
     return await handle_oai_response(request, OAI_ENDPOINT_DEV)
 
 
-@app.get("/oai")
+@app.get("/rdg/oai")
 async def oai(request: Request) -> Response:
     return await handle_oai_response(request, OAI_ENDPOINT)
