@@ -3,22 +3,24 @@ from os import getenv
 from fastapi import FastAPI, HTTPException, Request, Response
 from httpx import AsyncClient
 
+# Settings
+OAI_ENDPOINT = getenv("OAI_ENDPOINT", "https://data.sciencespo.fr/oai")
+OAI_ENDPOINT_DEV = getenv("OAI_ENDPOINT_DEV", "https://datapprd.sciencespo.fr/oai")
+
+# Mapping keys are used in the routes. Example: "/<key>/oai"
+MAPPINGS = {
+    "rdg": {
+        "Audio": "Audiovisual",
+        "Numeric": "Dataset",
+        "StillImage": "Still image",
+    }
+}
+
 # Initialize FastAPI and disable the documentation
 app = FastAPI(docs_url=None, redoc_url=None)
 
 # Initialize the asynchronous client
 client = AsyncClient()
-
-# Settings
-OAI_ENDPOINT = getenv("OAI_ENDPOINT", "https://data.sciencespo.fr/oai")
-OAI_ENDPOINT_DEV = getenv("OAI_ENDPOINT_DEV", "https://datapprd.sciencespo.fr/oai")
-
-# Mappings
-KINDOFDATA_MAPPING_RDG = {
-    "Audio": "Audiovisual",
-    "Numeric": "Dataset",
-    "StillImage": "Still image",
-}
 
 
 async def replace_content(content: str, mapping: dict) -> str:
@@ -29,13 +31,18 @@ async def replace_content(content: str, mapping: dict) -> str:
     return content
 
 
-async def handle_oai_response(request: Request, oai_endpoint: str) -> Response:
+async def handle_oai_response(
+    request: Request, oai_endpoint: str, mapping: dict
+) -> Response:
     """Handle the OAI response"""
+
+    if not mapping:
+        raise HTTPException(status_code=404)
 
     # Get the query to forward from the request
     query = request.url.query
     if not query:
-        return HTTPException(status_code=400, detail="No query specified")
+        raise HTTPException(status_code=400, detail="No query specified")
 
     # Build the source path
     source_path = f"{oai_endpoint}?{query}"
@@ -43,10 +50,10 @@ async def handle_oai_response(request: Request, oai_endpoint: str) -> Response:
     r = await client.get(source_path)
     # If the status is not OK, use the same status code as the source and its reason phrase
     if r.status_code != 200:
-        return HTTPException(status_code=r.status_code, detail=r.reason_phrase)
+        raise HTTPException(status_code=r.status_code, detail=r.reason_phrase)
 
     # Replace the content of the response
-    content = await replace_content(r.text, KINDOFDATA_MAPPING_RDG)
+    content = await replace_content(r.text, mapping)
 
     return Response(
         headers={
@@ -60,11 +67,11 @@ async def handle_oai_response(request: Request, oai_endpoint: str) -> Response:
     )
 
 
-@app.get("/dev/rdg/oai")
-async def oai_dev(request: Request) -> Response:
-    return await handle_oai_response(request, OAI_ENDPOINT_DEV)
+@app.get("/dev/{mapping}/oai")
+async def oai_dev(mapping: str, request: Request) -> Response:
+    return await handle_oai_response(request, OAI_ENDPOINT_DEV, MAPPINGS.get(mapping))
 
 
-@app.get("/rdg/oai")
-async def oai(request: Request) -> Response:
-    return await handle_oai_response(request, OAI_ENDPOINT)
+@app.get("/{mapping}/oai")
+async def oai(mapping: str, request: Request) -> Response:
+    return await handle_oai_response(request, OAI_ENDPOINT, MAPPINGS.get(mapping))
