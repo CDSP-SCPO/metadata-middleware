@@ -12,7 +12,7 @@ MAPPINGS = {
     "rdg": {
         "Audio": "Audiovisual",
         "Numeric": "Dataset",
-        "StillImage": "Still image",
+        "StillImage": "Image",
     }
 }
 
