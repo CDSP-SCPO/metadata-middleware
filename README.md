@@ -1,4 +1,4 @@
-# OAI middleware
+# Metadata middleware
 
 Small python server that forwards requests to an OAI endpoint, make some changes to the response and forwards it back.
 
