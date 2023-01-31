@@ -13,7 +13,7 @@ MAPPINGS = {
         "Audio": "Audiovisual",
         "Numeric": "Dataset",
         "StillImage": "Image",
-    }
+    },
 }
 
 # Initialize FastAPI and disable the documentation
