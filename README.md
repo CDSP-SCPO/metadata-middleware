@@ -64,3 +64,5 @@ The harvesting client must be saved a first time then edited again in order for 
 - Create a path that forwards requests/responses without any modification (for testing or to have a single endpoint for all harvester clients). This could be achieved by creating an empty mapping.
 - A way to customise the application without changing the code
 - ...
+### How to cite?
+ see https://hal-sciencespo.archives-ouvertes.fr/hal-03994930
