@@ -58,6 +58,10 @@ This server can be used to be harvested by Dataverse instances. To do that, foll
 
 The harvesting client must be saved a first time then edited again in order for the field to appear on the last page of the client settings.
 
+### Example of a harvesting client in Dataverse
+
+You can find a step by step tutorial to set up a harvesting client with Dataverse and metadata-middleware in the `docs` folder: [Dataverse + metadata-middleware](./docs/datasciencepo-harvesting-example.md).
+
 ## Possible improvements
 
 - Allow different types of response modifications, not only mappings between values
