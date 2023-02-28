@@ -10,6 +10,8 @@ OAI_ENDPOINT_DEV = getenv("OAI_ENDPOINT_DEV", "https://datapprd.sciencespo.fr/oa
 # Mapping keys are used in the routes. Example: "/<key>/oai"
 MAPPINGS = {
     "rdg": {
+        # We must change the endpoint in the response because of the pagination
+        "https://data.sciencespo.fr/oai": "https://export-data.sciencespo.fr/oai",
         "Audio": "Audiovisual",
         "Numeric": "Dataset",
         "StillImage": "Image",
