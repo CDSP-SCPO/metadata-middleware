@@ -7,11 +7,15 @@ from httpx import AsyncClient
 OAI_ENDPOINT = getenv("OAI_ENDPOINT", "https://data.sciencespo.fr/oai")
 OAI_ENDPOINT_DEV = getenv("OAI_ENDPOINT_DEV", "https://datapprd.sciencespo.fr/oai")
 
+# We must change the endpoint in the response because of the pagination
+ENDPOINT_MAPPING = {
+    OAI_ENDPOINT: "https://export-data.sciencespo.fr/oai",
+    OAI_ENDPOINT_DEV: "https://export-dataverse-pprd.cdsp.sciences-po.fr/oai",
+}
+
 # Mapping keys are used in the routes. Example: "/<key>/oai"
 MAPPINGS = {
     "rdg": {
-        # We must change the endpoint in the response because of the pagination
-        "https://data.sciencespo.fr/oai": "https://export-data.sciencespo.fr/oai",
         "Audio": "Audiovisual",
         "Numeric": "Dataset",
         "StillImage": "Image",
@@ -71,9 +75,23 @@ async def handle_oai_response(
 
 @app.get("/dev/{mapping}/oai")
 async def oai_dev(mapping: str, request: Request) -> Response:
-    return await handle_oai_response(request, OAI_ENDPOINT_DEV, MAPPINGS.get(mapping))
+    return await handle_oai_response(
+        request,
+        OAI_ENDPOINT_DEV,
+        {
+            OAI_ENDPOINT_DEV: ENDPOINT_MAPPING.get(OAI_ENDPOINT_DEV),
+            **MAPPINGS.get(mapping),
+        },
+    )
 
 
 @app.get("/{mapping}/oai")
 async def oai(mapping: str, request: Request) -> Response:
-    return await handle_oai_response(request, OAI_ENDPOINT, MAPPINGS.get(mapping))
+    return await handle_oai_response(
+        request,
+        OAI_ENDPOINT,
+        {
+            OAI_ENDPOINT: ENDPOINT_MAPPING.get(OAI_ENDPOINT),
+            **MAPPINGS.get(mapping),
+        },
+    )
