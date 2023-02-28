@@ -2,6 +2,7 @@ from os import getenv
 
 from fastapi import FastAPI, HTTPException, Request, Response
 from httpx import AsyncClient
+from uvicorn import run as run_uvicorn
 
 # Settings
 OAI_ENDPOINT = getenv("OAI_ENDPOINT", "https://data.sciencespo.fr/oai")
@@ -95,3 +96,7 @@ async def oai(mapping: str, request: Request) -> Response:
             **MAPPINGS.get(mapping),
         },
     )
+
+
+if __name__ == "__main__":
+    run_uvicorn(app, host="0.0.0.0", port=8000, reload=True)
