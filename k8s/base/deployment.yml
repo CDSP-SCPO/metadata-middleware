@@ -21,4 +21,4 @@ spec:
         image: gitlab.sciences-po.fr:4567/cdspit/dataverse/metadata-middleware/metadata-middleware:latest
         ports:
           - containerPort: 8000
-      imagePullPolicy: Always
+        imagePullPolicy: Always
