@@ -20,6 +20,7 @@ MAPPINGS = {
         "Audio": "Audiovisual",
         "Numeric": "Dataset",
         "StillImage": "Image",
+        "Video": "Audiovisual",
     },
 }
 
