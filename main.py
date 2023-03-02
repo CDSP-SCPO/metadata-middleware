@@ -17,10 +17,10 @@ ENDPOINT_MAPPING = {
 # Mapping keys are used in the routes. Example: "/<key>/oai"
 MAPPINGS = {
     "rdg": {
-        "Audio": "Audiovisual",
-        "Numeric": "Dataset",
-        "StillImage": "Image",
-        "Video": "Audiovisual",
+        "<dc:type>Audio</dc:type>": "<dc:type>Audiovisual</dc:type>",
+        "<dc:type>Numeric</dc:type>": "<dc:type>Dataset</dc:type>",
+        "<dc:type>StillImage</dc:type>": "<dc:type>Image</dc:type>",
+        "<dc:type>Video</dc:type>": "<dc:type>Audiovisual</dc:type>",
     },
 }
 
