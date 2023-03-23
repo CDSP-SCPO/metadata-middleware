@@ -18,8 +18,14 @@ ENDPOINT_MAPPING = {
 MAPPINGS = {
     "rdg": {
         "<dc:type>Audio</dc:type>": "<dc:type>Audiovisual</dc:type>",
-        "<dc:type>Numeric</dc:type>": "<dc:type>Dataset</dc:type>",
+        "<dc:type>Geospatial</dc:type>": "<dc:type>Other</dc:type>",
+        "<dc:type>InteractiveResource</dc:type>": "<dc:type>Interactive Resource</dc:type>",
+        "<dc:type>Numeric</dc:type>": "<dc:type>Text</dc:type>",
+        # "<dc:type>Other</dc:type>": "<dc:type>Other</dc:type>",
+        # "<dc:type>Software</dc:type>": "<dc:type>Software</dc:type>",
         "<dc:type>StillImage</dc:type>": "<dc:type>Image</dc:type>",
+        # "<dc:type>Text</dc:type>": "<dc:type>Text</dc:type>",
+        "<dc:type>ThreeD</dc:type>": "<dc:type>Audiovisual</dc:type>",
         "<dc:type>Video</dc:type>": "<dc:type>Audiovisual</dc:type>",
     },
 }
